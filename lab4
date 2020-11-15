@@ -1,0 +1,94 @@
+#include <cstdlib>
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+#include <conio.h>
+
+#define SIZE 3
+using namespace std;
+
+struct PRICE
+{
+    char mag[80];
+    char tovar[80];
+    int stoim;
+};
+
+void sort(struct PRICE spisok[]);
+
+int main(int argc, char const *argv[])
+{
+    int i, np;
+
+    PRICE spisok[SIZE];
+
+    // заполнение массива и вывод на экран
+    for (int i = 0; i < SIZE; i++)
+    {
+        cout << "Ввод " << i + 1 << ":" << endl;
+        cout << "Магазин: ";
+        cin >> spisok[i].mag;
+        cout << "Товар: ";
+        cin >> spisok[i].tovar;
+        cout << "Стоимость: ";
+        cin >> spisok[i].stoim;
+    }
+
+    sort(spisok);
+    cout << endl;
+    for (int i = 0; i < SIZE; ++i)
+    {
+        cout << spisok[i].mag << " " << spisok[i].tovar << " " << spisok[i].stoim << endl;
+    }
+
+    // Сортировка
+
+    //вывод информации по запросу
+    cout << endl
+         << "Поиск товара" << endl;
+    while (true)
+    {
+        string plane;
+        cout << endl
+             << "Название товара: ";
+        cin >> plane;
+        i = 0;
+        while ((spisok[i].tovar != plane) && (i < SIZE))
+            i++;
+        if (i == SIZE)
+            cout << endl
+                 << "Нет такого товара " << plane << endl;
+        else
+        {
+            cout << endl
+                 << "Магазин: " << spisok[i].mag << "   ";
+            cout << "Товар: " << spisok[i].tovar << "  Цена: " << spisok[i].stoim << endl;
+        }
+        cout << endl
+             << "continue ? (1 or 0): ";
+        cin >> np;
+        if (np == 0)
+            break;
+    }
+
+    cout << endl;
+    system("pause");
+    return (0);
+}
+
+void sort(struct PRICE spisok[])
+{
+    PRICE p;
+    for (int j = 0; j < SIZE; j++)
+    {
+        for (int k = 0; k < SIZE; k++)
+        {
+            if (strcmp(spisok[j].mag, spisok[k].mag) < 0)
+            {
+                p = spisok[j];
+                spisok[j] = spisok[k];
+                spisok[k] = p;
+            }
+        }
+    }
+}
